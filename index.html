@@ -46,8 +46,11 @@ html, body {
 body {
   background: var(--deep);
   background-image:
-    radial-gradient(ellipse at 20% 15%, rgba(26,112,112,0.1) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 85%, rgba(123,104,194,0.07) 0%, transparent 55%);
+    radial-gradient(ellipse at 20% 15%, rgba(26,112,112,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(123,104,194,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%),
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,168,76,0.015) 40px, rgba(201,168,76,0.015) 41px);
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -302,6 +305,79 @@ body {
 /* ─── FOOTER ─── */
 .footer-orn { text-align: center; color: var(--gold); font-size: 12px; letter-spacing: 5px; margin-top: 14px; opacity: 0.6; }
 
+/* ─── BOTANICAL CORNERS ─── */
+.botanical-corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  opacity: 0.82;
+}
+.botanical-corner.tl { top: 0; left: 0; }
+.botanical-corner.tr { top: 0; right: 0; transform: scaleX(-1); }
+.botanical-corner.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+.botanical-corner.br { bottom: 0; right: 0; transform: scale(-1); }
+
+/* ─── FLOATING PETALS ─── */
+#petal-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -30px;
+  pointer-events: none;
+  user-select: none;
+  animation: petalFall linear forwards;
+  opacity: 0;
+}
+@keyframes petalFall {
+  0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+  8%   { opacity: 0.7; }
+  85%  { opacity: 0.4; }
+  100% { transform: translateY(105vh) rotate(420deg) translateX(40px); opacity: 0; }
+}
+
+/* ─── FANCY DIVIDER ─── */
+.fancy-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 14px 0;
+}
+.fancy-div svg { display: block; }
+
+/* ─── TWINKLING STARS ─── */
+.twinkle {
+  position: fixed;
+  pointer-events: none;
+  animation: twinkleAnim ease-in-out infinite;
+  z-index: 0;
+  color: var(--gold);
+  font-size: 8px;
+  opacity: 0;
+}
+@keyframes twinkleAnim {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%       { opacity: 0.4; transform: scale(1); }
+}
+
+/* ─── QUOTE CORNER ACCENTS ─── */
+.quote-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+}
+.quote-corner.tl { top: 6px; left: 6px; }
+.quote-corner.tr { top: 6px; right: 6px; transform: scaleX(-1); }
+.quote-corner.bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
+.quote-corner.br { bottom: 6px; right: 6px; transform: scale(-1); }
+
 /* ─── SPARKLES ─── */
 .sparkle {
   position: absolute;
@@ -398,13 +474,121 @@ body {
   </div>
 </div>
 
+<!-- Floating petals layer -->
+<div id="petal-container"></div>
+
 <div class="outer-frame">
 <div class="page">
 
-  <span class="corner corner-tl">❧</span>
-  <span class="corner corner-tr">❧</span>
-  <span class="corner corner-bl">❦</span>
-  <span class="corner corner-br">❦</span>
+  <!-- Botanical SVG corners -->
+  <svg class="botanical-corner tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 Q18,4 22,18 Q27,34 19,52 Q15,62 9,68" stroke="#c9a84c" stroke-width="1.3" opacity="0.6"/>
+    <path d="M22,18 Q38,12 46,22" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+    <path d="M16,32 Q2,28 6,18 Q16,26 16,32" fill="#2a6040" opacity="0.65"/>
+    <path d="M13,46 Q0,42 4,32 Q13,39 13,46" fill="#2a6040" opacity="0.55"/>
+    <path d="M26,10 Q24,1 33,3 Q28,8 26,10" fill="#2a6040" opacity="0.5"/>
+    <g transform="translate(18,50)">
+      <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#7b68c2" opacity="0.8"/>
+      <ellipse cx="6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(36,6,-3)"/>
+      <ellipse cx="-6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(-36,-6,-3)"/>
+      <ellipse cx="7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(62,7,4)"/>
+      <ellipse cx="-7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(-62,-7,4)"/>
+      <path d="M0,3 Q-5,10 -3,16 Q0,19 3,16 Q5,10 0,3" fill="#d4a8cc" opacity="0.8"/>
+      <circle cx="0" cy="3" r="4" fill="#f0e8b0"/>
+      <circle cx="0" cy="3" r="2" fill="#e0d080"/>
+    </g>
+    <g transform="translate(44,22)">
+      <ellipse cx="0" cy="-5" rx="4" ry="6" fill="#7b68c2" opacity="0.75"/>
+      <ellipse cx="5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(36,5,-2)"/>
+      <ellipse cx="-5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(-36,-5,-2)"/>
+      <ellipse cx="6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(62,6,3)"/>
+      <ellipse cx="-6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(-62,-6,3)"/>
+      <circle cx="0" cy="2" r="3" fill="#f0e8b0"/>
+    </g>
+    <ellipse cx="10" cy="63" rx="2.5" ry="5" fill="#6050b0" opacity="0.55" transform="rotate(-15,10,63)"/>
+    <ellipse cx="6" cy="72" rx="2" ry="4" fill="#6050b0" opacity="0.4" transform="rotate(-25,6,72)"/>
+  </svg>
+  <svg class="botanical-corner tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 Q18,4 22,18 Q27,34 19,52 Q15,62 9,68" stroke="#c9a84c" stroke-width="1.3" opacity="0.6"/>
+    <path d="M22,18 Q38,12 46,22" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+    <path d="M16,32 Q2,28 6,18 Q16,26 16,32" fill="#2a6040" opacity="0.65"/>
+    <path d="M13,46 Q0,42 4,32 Q13,39 13,46" fill="#2a6040" opacity="0.55"/>
+    <path d="M26,10 Q24,1 33,3 Q28,8 26,10" fill="#2a6040" opacity="0.5"/>
+    <g transform="translate(18,50)">
+      <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#7b68c2" opacity="0.8"/>
+      <ellipse cx="6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(36,6,-3)"/>
+      <ellipse cx="-6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(-36,-6,-3)"/>
+      <ellipse cx="7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(62,7,4)"/>
+      <ellipse cx="-7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(-62,-7,4)"/>
+      <path d="M0,3 Q-5,10 -3,16 Q0,19 3,16 Q5,10 0,3" fill="#d4a8cc" opacity="0.8"/>
+      <circle cx="0" cy="3" r="4" fill="#f0e8b0"/>
+      <circle cx="0" cy="3" r="2" fill="#e0d080"/>
+    </g>
+    <g transform="translate(44,22)">
+      <ellipse cx="0" cy="-5" rx="4" ry="6" fill="#7b68c2" opacity="0.75"/>
+      <ellipse cx="5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(36,5,-2)"/>
+      <ellipse cx="-5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(-36,-5,-2)"/>
+      <ellipse cx="6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(62,6,3)"/>
+      <ellipse cx="-6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(-62,-6,3)"/>
+      <circle cx="0" cy="2" r="3" fill="#f0e8b0"/>
+    </g>
+    <ellipse cx="10" cy="63" rx="2.5" ry="5" fill="#6050b0" opacity="0.55" transform="rotate(-15,10,63)"/>
+    <ellipse cx="6" cy="72" rx="2" ry="4" fill="#6050b0" opacity="0.4" transform="rotate(-25,6,72)"/>
+  </svg>
+  <svg class="botanical-corner bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 Q18,4 22,18 Q27,34 19,52 Q15,62 9,68" stroke="#c9a84c" stroke-width="1.3" opacity="0.6"/>
+    <path d="M22,18 Q38,12 46,22" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+    <path d="M16,32 Q2,28 6,18 Q16,26 16,32" fill="#2a6040" opacity="0.65"/>
+    <path d="M13,46 Q0,42 4,32 Q13,39 13,46" fill="#2a6040" opacity="0.55"/>
+    <path d="M26,10 Q24,1 33,3 Q28,8 26,10" fill="#2a6040" opacity="0.5"/>
+    <g transform="translate(18,50)">
+      <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#7b68c2" opacity="0.8"/>
+      <ellipse cx="6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(36,6,-3)"/>
+      <ellipse cx="-6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(-36,-6,-3)"/>
+      <ellipse cx="7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(62,7,4)"/>
+      <ellipse cx="-7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(-62,-7,4)"/>
+      <path d="M0,3 Q-5,10 -3,16 Q0,19 3,16 Q5,10 0,3" fill="#d4a8cc" opacity="0.8"/>
+      <circle cx="0" cy="3" r="4" fill="#f0e8b0"/>
+      <circle cx="0" cy="3" r="2" fill="#e0d080"/>
+    </g>
+    <g transform="translate(44,22)">
+      <ellipse cx="0" cy="-5" rx="4" ry="6" fill="#7b68c2" opacity="0.75"/>
+      <ellipse cx="5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(36,5,-2)"/>
+      <ellipse cx="-5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(-36,-5,-2)"/>
+      <ellipse cx="6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(62,6,3)"/>
+      <ellipse cx="-6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(-62,-6,3)"/>
+      <circle cx="0" cy="2" r="3" fill="#f0e8b0"/>
+    </g>
+    <ellipse cx="10" cy="63" rx="2.5" ry="5" fill="#6050b0" opacity="0.55" transform="rotate(-15,10,63)"/>
+    <ellipse cx="6" cy="72" rx="2" ry="4" fill="#6050b0" opacity="0.4" transform="rotate(-25,6,72)"/>
+  </svg>
+  <svg class="botanical-corner br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4,4 Q18,4 22,18 Q27,34 19,52 Q15,62 9,68" stroke="#c9a84c" stroke-width="1.3" opacity="0.6"/>
+    <path d="M22,18 Q38,12 46,22" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+    <path d="M16,32 Q2,28 6,18 Q16,26 16,32" fill="#2a6040" opacity="0.65"/>
+    <path d="M13,46 Q0,42 4,32 Q13,39 13,46" fill="#2a6040" opacity="0.55"/>
+    <path d="M26,10 Q24,1 33,3 Q28,8 26,10" fill="#2a6040" opacity="0.5"/>
+    <g transform="translate(18,50)">
+      <ellipse cx="0" cy="-7" rx="5" ry="7" fill="#7b68c2" opacity="0.8"/>
+      <ellipse cx="6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(36,6,-3)"/>
+      <ellipse cx="-6" cy="-3" rx="5" ry="7" fill="#7b68c2" opacity="0.8" transform="rotate(-36,-6,-3)"/>
+      <ellipse cx="7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(62,7,4)"/>
+      <ellipse cx="-7" cy="4" rx="5" ry="8" fill="#9080d8" opacity="0.65" transform="rotate(-62,-7,4)"/>
+      <path d="M0,3 Q-5,10 -3,16 Q0,19 3,16 Q5,10 0,3" fill="#d4a8cc" opacity="0.8"/>
+      <circle cx="0" cy="3" r="4" fill="#f0e8b0"/>
+      <circle cx="0" cy="3" r="2" fill="#e0d080"/>
+    </g>
+    <g transform="translate(44,22)">
+      <ellipse cx="0" cy="-5" rx="4" ry="6" fill="#7b68c2" opacity="0.75"/>
+      <ellipse cx="5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(36,5,-2)"/>
+      <ellipse cx="-5" cy="-2" rx="4" ry="6" fill="#7b68c2" opacity="0.75" transform="rotate(-36,-5,-2)"/>
+      <ellipse cx="6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(62,6,3)"/>
+      <ellipse cx="-6" cy="3" rx="4" ry="6" fill="#9080d8" opacity="0.6" transform="rotate(-62,-6,3)"/>
+      <circle cx="0" cy="2" r="3" fill="#f0e8b0"/>
+    </g>
+    <ellipse cx="10" cy="63" rx="2.5" ry="5" fill="#6050b0" opacity="0.55" transform="rotate(-15,10,63)"/>
+    <ellipse cx="6" cy="72" rx="2" ry="4" fill="#6050b0" opacity="0.4" transform="rotate(-25,6,72)"/>
+  </svg>
 
   <!-- HEADER -->
   <div class="header">
@@ -414,7 +598,19 @@ body {
     <span class="header-orn">❦ · ❀ · ❦</span>
   </div>
 
-  <div class="div">· ✦ ·</div>
+  <!-- Fancy divider -->
+  <div class="fancy-div">
+    <svg width="200" height="22" viewBox="0 0 200 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="11" x2="72" y2="11" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+      <path d="M78,11 Q82,5 86,11 Q90,17 94,11" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.6"/>
+      <circle cx="100" cy="11" r="4" fill="#c9a84c" opacity="0.7"/>
+      <circle cx="100" cy="11" r="2" fill="#f0e8b0" opacity="0.8"/>
+      <path d="M106,11 Q110,5 114,11 Q118,17 122,11" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.6"/>
+      <line x1="128" y1="11" x2="200" y2="11" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="78" cy="11" r="2" fill="#7b68c2" opacity="0.5"/>
+      <circle cx="122" cy="11" r="2" fill="#7b68c2" opacity="0.5"/>
+    </svg>
+  </div>
 
   <!-- DATE -->
   <div class="date-area">
@@ -422,7 +618,17 @@ body {
     <div class="day-count" id="dayCount">—</div>
   </div>
 
-  <div class="div">✦</div>
+  <!-- Small divider -->
+  <div class="fancy-div">
+    <svg width="120" height="16" viewBox="0 0 120 16" fill="none">
+      <line x1="0" y1="8" x2="48" y2="8" stroke="#c9a84c" stroke-width="0.7" opacity="0.35"/>
+      <ellipse cx="52" cy="8" rx="3" ry="4.5" fill="#7b68c2" opacity="0.55"/>
+      <circle cx="60" cy="8" r="3.5" fill="#c9a84c" opacity="0.65"/>
+      <circle cx="60" cy="8" r="1.8" fill="#f0e8b0" opacity="0.8"/>
+      <ellipse cx="68" cy="8" rx="3" ry="4.5" fill="#7b68c2" opacity="0.55"/>
+      <line x1="72" y1="8" x2="120" y2="8" stroke="#c9a84c" stroke-width="0.7" opacity="0.35"/>
+    </svg>
+  </div>
 
   <!-- ORCHID -->
   <div class="plant-outer">
@@ -638,11 +844,35 @@ body {
     <div class="progress-stage" id="progressStageLabel">Stage 1 of 6 — Seed</div>
   </div>
 
-  <div class="div">· · ❦ · ·</div>
+  <!-- Fancy divider with leaves -->
+  <div class="fancy-div">
+    <svg width="240" height="26" viewBox="0 0 240 26" fill="none">
+      <line x1="0" y1="13" x2="80" y2="13" stroke="#c9a84c" stroke-width="0.8" opacity="0.35"/>
+      <path d="M86,13 Q90,6 96,13" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5"/>
+      <path d="M88,15 Q84,8 90,7 Q90,13 88,15" fill="#2a6040" opacity="0.55"/>
+      <g transform="translate(120,13)">
+        <ellipse cx="0" cy="-5" rx="4" ry="5.5" fill="#7b68c2" opacity="0.7"/>
+        <ellipse cx="4.5" cy="-2" rx="4" ry="5.5" fill="#7b68c2" opacity="0.7" transform="rotate(36,4.5,-2)"/>
+        <ellipse cx="-4.5" cy="-2" rx="4" ry="5.5" fill="#7b68c2" opacity="0.7" transform="rotate(-36,-4.5,-2)"/>
+        <ellipse cx="5.5" cy="3" rx="4" ry="5.5" fill="#9080d8" opacity="0.55" transform="rotate(62,5.5,3)"/>
+        <ellipse cx="-5.5" cy="3" rx="4" ry="5.5" fill="#9080d8" opacity="0.55" transform="rotate(-62,-5.5,3)"/>
+        <circle cx="0" cy="2" r="3" fill="#f0e8b0"/>
+        <circle cx="0" cy="2" r="1.5" fill="#e0d080"/>
+      </g>
+      <path d="M144,13 Q150,6 154,13" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5"/>
+      <path d="M152,15 Q156,8 150,7 Q150,13 152,15" fill="#2a6040" opacity="0.55"/>
+      <line x1="160" y1="13" x2="240" y2="13" stroke="#c9a84c" stroke-width="0.8" opacity="0.35"/>
+    </svg>
+  </div>
 
   <!-- Quote -->
   <div class="quote-frame">
     <div class="quote-topper">❧ ✿ ❧</div>
+    <!-- Quote corner accents -->
+    <svg class="quote-corner tl" viewBox="0 0 28 28" fill="none"><path d="M2,2 Q12,2 14,12 Q16,20 10,26" stroke="#c9a84c" stroke-width="1" opacity="0.5"/><circle cx="14" cy="11" r="3" fill="#7b68c2" opacity="0.6"/><path d="M10,18 Q4,16 6,10 Q10,15 10,18" fill="#2a6040" opacity="0.5"/></svg>
+    <svg class="quote-corner tr" viewBox="0 0 28 28" fill="none"><path d="M2,2 Q12,2 14,12 Q16,20 10,26" stroke="#c9a84c" stroke-width="1" opacity="0.5"/><circle cx="14" cy="11" r="3" fill="#7b68c2" opacity="0.6"/><path d="M10,18 Q4,16 6,10 Q10,15 10,18" fill="#2a6040" opacity="0.5"/></svg>
+    <svg class="quote-corner bl" viewBox="0 0 28 28" fill="none"><path d="M2,2 Q12,2 14,12 Q16,20 10,26" stroke="#c9a84c" stroke-width="1" opacity="0.5"/><circle cx="14" cy="11" r="3" fill="#7b68c2" opacity="0.6"/><path d="M10,18 Q4,16 6,10 Q10,15 10,18" fill="#2a6040" opacity="0.5"/></svg>
+    <svg class="quote-corner br" viewBox="0 0 28 28" fill="none"><path d="M2,2 Q12,2 14,12 Q16,20 10,26" stroke="#c9a84c" stroke-width="1" opacity="0.5"/><circle cx="14" cy="11" r="3" fill="#7b68c2" opacity="0.6"/><path d="M10,18 Q4,16 6,10 Q10,15 10,18" fill="#2a6040" opacity="0.5"/></svg>
     <div class="quote-label">A note from the universe</div>
     <div class="quote-text" id="quoteText">—</div>
     <div class="quote-sig">— The Universe ✦</div>
@@ -903,6 +1133,44 @@ function updateUI() {
 // ── Init ──
 if (!get('start', null)) set('start', todayStr());
 updateUI();
+
+// ── Floating petals ──
+function spawnPetal() {
+  const container = document.getElementById('petal-container');
+  if (!container) return;
+  const shapes = ['✿', '❀', '✾', '❁', '✽'];
+  const colors = ['#d4a8cc', '#b0a0e8', '#c9a84c88', '#4dbcbc88', '#e8d5a3aa'];
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+  p.style.left = (Math.random() * 100) + 'vw';
+  p.style.fontSize = (9 + Math.random() * 11) + 'px';
+  p.style.color = colors[Math.floor(Math.random() * colors.length)];
+  const dur = 12 + Math.random() * 14;
+  p.style.animation = `petalFall ${dur}s linear forwards`;
+  container.appendChild(p);
+  setTimeout(() => p.remove(), dur * 1000 + 500);
+}
+// Stagger initial petals
+for (let i = 0; i < 6; i++) setTimeout(spawnPetal, i * 1800);
+setInterval(spawnPetal, 3000);
+
+// ── Twinkling background stars ──
+function createStars() {
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'twinkle';
+    s.textContent = '✦';
+    s.style.left  = (Math.random() * 100) + 'vw';
+    s.style.top   = (Math.random() * 100) + 'vh';
+    s.style.fontSize = (5 + Math.random() * 6) + 'px';
+    s.style.animationDuration = (3 + Math.random() * 5) + 's';
+    s.style.animationDelay    = (Math.random() * 6) + 's';
+    document.body.appendChild(s);
+  }
+}
+createStars();
 
 // Register service worker
 if ('serviceWorker' in navigator) {
